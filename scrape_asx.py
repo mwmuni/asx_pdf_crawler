@@ -25,7 +25,6 @@ def download_save(_id, code):
     start = mystr.find(start_str) - 1
     end = mystr.find(end_str) + len(end_str)
     pdf_suffix = mystr[start:end]
-    # print(pdf_suffix)
     r = requests.get("{}{}".format(prefix, pdf_suffix))
     with open("pdfs/{}/{}.pdf".format(code, calendar.timegm(parse(r.headers['Last-Modified']).timetuple())), "wb") as f:
         f.write(r.content)
@@ -41,7 +40,7 @@ if __name__ == "__main__":
         fp = urllib.request.urlopen("https://www.asx.com.au/asx/statistics/announcements.do?by=asxCode&asxCode={}&timeframe=D&period=M3".format(code))
         mybytes = fp.read()
 
-        mystr = str(mybytes)#mybytes.decode("latin")
+        mystr = str(mybytes)
         id_loc: List[int] = [s.end()+1 for s in re.finditer(str_find, mystr)]
         id_val: List[str] = [mystr[loc:loc+8] for loc in id_loc]
 
@@ -49,7 +48,3 @@ if __name__ == "__main__":
 
         with Pool(64) as p:
             p.map(partial(download_save, code=code), id_val)
-
-    # print(mystr)
-    # print(id_loc)
-    # print(id_val)
