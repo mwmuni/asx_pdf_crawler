@@ -33,6 +33,8 @@ def download_save(_id, code):
     _fp.close()
 
 if __name__ == "__main__":
+    if not os.path.exists("pdfs"):
+        os.mkdir("pdfs")
     for code in stock_codes:
         if not os.path.exists("pdfs/{}".format(code)):
             os.mkdir("pdfs/{}".format(code))
