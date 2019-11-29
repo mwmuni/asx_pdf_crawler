@@ -1,9 +1,1 @@
-google
-protobuf
-pandas
-datetime
-dateutil
-requests
-urllib
-beautifulsoup4
-json
+fitz
